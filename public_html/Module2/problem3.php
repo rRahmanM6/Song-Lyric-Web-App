@@ -18,6 +18,8 @@ function bePositive($arr) {
         }
         var_dump($val);
         echo("<br>");
+        echo("<br>");
+
     }
     //rr42 02/06/2024
 }
