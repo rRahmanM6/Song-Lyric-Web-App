@@ -12,7 +12,7 @@ function bePositive($arr) {
     //hint: may want to use var_dump() or similar to show final data types
     //echo out positive value as the original data type
     foreach ($arr as $val) {
-        var_dump($val);
+        var_export($val);
         if ($val < 0) {
             $val = abs($val);
         }
