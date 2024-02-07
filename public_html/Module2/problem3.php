@@ -14,8 +14,10 @@ function bePositive($arr) {
         if ($val < 0) {
             $val = abs($val);
         }
-        echo $val . "<br>";
+        var_dump($val);
+        echo("<br>");
     }
+    //rr42 02/06/2024
 }
 echo "Problem 3: Be Positive<br>";
 ?>
