@@ -15,7 +15,10 @@ function getTotal($arr) {
     $total = round($total, 2);
     
     echo "The total is " . var_export($total, true);
+    
+    //rr42 02/06/2024
 }
+
 echo "Problem 2: Adding Floats<br>";
 ?>
 <table>
