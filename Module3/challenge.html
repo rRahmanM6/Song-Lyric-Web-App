@@ -8,21 +8,72 @@
         window.addEventListener("load", () => {
             console.log("loaded via javascript");
             //TODO: add any extra onload processing you may need here
+            getCurrentSelection();
+            document.querySelectorAll("nav a").forEach((link) => {
+                link.addEventListener("click", (event) => {
+                    updateCurrentPage(event.target.innerText);
+                });
+            });
+
+
         });
         function getCurrentSelection() {
             setTimeout(() => {
                 //added this delay here as some solutions may require it to update properly (i.e., click code may complete before the navigation changes)
-                //TODO: add code for processing the current selection 
-
+                //TODO: add code for storing current selection in the navigation bar and pass to updateCurrentPage()
+                let currentSelection = document.querySelector("nav a:hover").innerText;
                 //Note: likely you'll want to call updateCurrentPage towards the end
+                updateCurrentPage(currentSelection);
             }, 100);
         }
     </script>
     <style>
-        /* TODO: make edits here */
-    </style>
-    <!-- make the necessary edits above this line -->
+    /* TODO: make edits here */
+        nav ul {
+    /* make navigation horizontal */
+            display: flex;
+            flex-direction: row;
+    /*get rid of the navigation list item markers*/
+            padding: 0;
+            margin: 0;
+        
 
+    /*give the navigation a background*/
+            background-color: #00000044;
+        }
+        
+    /*Make the links change color on mouseover*/
+        nav a:hover {
+            color: #ffffff;
+        }
+
+    /*Change the "bullet points" of this list to checkmarks*/
+        ul li::before {
+            content: "✓";
+            padding-right: 5px;
+        }
+        
+    /*Uppercase the first character of the content in the <h1> tag and the <a> tags*/
+        h1, nav a {
+            text-transform: uppercase;
+        }
+
+    /*Add some styling of your choice*/
+        /*add padding between nav items */
+        nav a {
+            padding: 0 10px;
+        }
+        /*remove check marks from nav items */
+        nav li::before {
+            content: none;
+        }
+        /*remove bullet points from nav items */
+        nav li {
+            list-style-type: none;
+        }
+        
+
+    </style>
 
     <!-- Do not edit anything below this line, doing so will lose points-->
     <script src="https://it202-spring-22.herokuapp.com/M3/problem1.js">
