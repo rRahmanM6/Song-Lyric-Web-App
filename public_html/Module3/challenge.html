@@ -29,49 +29,24 @@
     </script>
     <style>
     /* TODO: make edits here */
-        nav ul {
-    /* make navigation horizontal */
-            display: flex;
-            flex-direction: row;
-    /*get rid of the navigation list item markers*/
-            padding: 0;
-            margin: 0;
-        
-
-    /*give the navigation a background*/
-            background-color: #00000044;
-        }
-        
-    /*Make the links change color on mouseover*/
-        nav a:hover {
-            color: #ffffff;
-        }
-
-    /*Change the "bullet points" of this list to checkmarks*/
-        ul li::before {
-            content: "✓";
-            padding-right: 5px;
-        }
-        
-    /*Uppercase the first character of the content in the <h1> tag and the <a> tags*/
-        h1, nav a {
-            text-transform: uppercase;
-        }
-
-    /*Add some styling of your choice*/
-        /*add padding between nav items */
-        nav a {
-            padding: 0 10px;
-        }
-        /*remove check marks from nav items */
-        nav li::before {
-            content: none;
-        }
-        /*remove bullet points from nav items */
-        nav li {
+        nav ul li {
+            float: left;
+            background-color: #e1ff00;
             list-style-type: none;
         }
-        
+
+        nav a:hover {
+            color: #0095ff; }
+
+        ul {
+            list-style-type: '✓';  }
+
+        h1, a {
+            text-transform: capitalize; }
+
+        /*add padding between navigation items*/
+        nav ul li {
+            padding: 10px; }
 
     </style>
 
