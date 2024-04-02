@@ -124,7 +124,16 @@ $username = get_username();
         let pw = form.newPassword.value;
         let con = form.confirmPassword.value;
         let isValid = true;
-        //TODO add other client side validation....
+        //TODO add client side validation
+        //ensure it returns false for an error and true for success
+        if (!pw || !pw.trim()) {
+            flash("Password is required", "warning");
+            isValid = false;
+        }
+        if (!con || !con.trim()) {
+            flash("Confirm password is required", "warning");
+            isValid = false;
+        }
 
         //example of using flash via javascript
         //find the flash container, create a new element, appendChild
