@@ -21,11 +21,11 @@ require_once(__DIR__ . "/../../partials/nav.php");
         let password = form.password.value;
         if (!email || !email.trim()) {
             isValid = false;
-            alert("Email/Username is required");
+            alert("Email/Username is required [Client]");
         }
         if (!password || !password.trim()) {
             isValid = false;
-            alert("Password is required");
+            alert("Password is required [Client]");
         }
         return isValid;
     }

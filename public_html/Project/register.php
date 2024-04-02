@@ -32,23 +32,23 @@ reset_session();
         let username = form.username.value;
         if (!email || !email.trim()) {
             isValid = false;
-            alert("Email is required");
+            alert("Email is required [Client]");
         }
         if (!username || !username.trim()) {
             isValid = false;
-            alert("Username is required");
+            alert("Username is required [Client]");
         }
         if (!password || !password.trim()) {
             isValid = false;
-            alert("Password is required");
+            alert("Password is required [Client]");
         }
         if (!confirm || !confirm.trim()) {
             isValid = false;
-            alert("Confirm password is required");
+            alert("Confirm password is required [Client]");
         }
         if (password !== confirm) {
             isValid = false;
-            alert("Passwords must match");
+            alert("Passwords must match [Client]");
         }
 
         return true;
