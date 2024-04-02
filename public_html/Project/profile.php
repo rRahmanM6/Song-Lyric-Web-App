@@ -127,18 +127,18 @@ $username = get_username();
         //TODO add client side validation
         //ensure it returns false for an error and true for success
         if (!pw || !pw.trim()) {
-            flash("Password is required", "warning");
+            flash("Password is required [Client]", "warning");
             isValid = false;
         }
         if (!con || !con.trim()) {
-            flash("Confirm password is required", "warning");
+            flash("Confirm password is required [Client]", "warning");
             isValid = false;
         }
 
         //example of using flash via javascript
         //find the flash container, create a new element, appendChild
         if (pw !== con) {
-            flash("Password and Confrim password must match", "warning");
+            flash("Password and Confrim password must match [Client]", "warning");
             isValid = false;
         }
         return isValid;
