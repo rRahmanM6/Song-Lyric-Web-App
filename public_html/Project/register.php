@@ -25,6 +25,31 @@ reset_session();
     function validate(form) {
         //TODO 1: implement JavaScript validation
         //ensure it returns false for an error and true for success
+        let isValid = true;
+        let email = form.email.value;
+        let password = form.password.value;
+        let confirm = form.confirm.value;
+        let username = form.username.value;
+        if (!email || !email.trim()) {
+            isValid = false;
+            alert("Email is required");
+        }
+        if (!username || !username.trim()) {
+            isValid = false;
+            alert("Username is required");
+        }
+        if (!password || !password.trim()) {
+            isValid = false;
+            alert("Password is required");
+        }
+        if (!confirm || !confirm.trim()) {
+            isValid = false;
+            alert("Confirm password is required");
+        }
+        if (password !== confirm) {
+            isValid = false;
+            alert("Passwords must match");
+        }
 
         return true;
     }
