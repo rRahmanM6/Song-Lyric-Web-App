@@ -22,50 +22,41 @@ reset_session();
     <input type="submit" value="Register" />
 </form>
 <script>
-    function validate(form) {
+    function validate(form) {  
         //TODO 1: implement JavaScript validation
         //ensure it returns false for an error and true for success
-        let isValid = true;
-        let email = form.email.value;
-        let password = form.password.value;
-        let confirm = form.confirm.value;
-        let username = form.username.value;
-        if (!isValidEmail(email)) {
-            isValid = false;
-            alert("Invalid email format [Client]");
+        if (form.email.value.trim() === "") {
+            flash("Email must not be empty [Client]", "danger");
+            return false;
         }
-        if (!email || !email.trim()) {
-            isValid = false;
-            alert("Email is required [Client]");
+        if (!validateEmail(form.email.value.trim())) {
+            flash("Invalid email address [Client]", "danger");
+            return false;
         }
-
-        if (!isValidUsername(username)) {
-            isValid = false;
-            alert("Invalid username format [Client]");
+        if (form.username.value.trim() === "") {
+            flash("Username must not be empty [Client]", "danger");
+            return false;
         }
-        if (!username || !username.trim()) {
-            isValid = false;
-            alert("Username is required [Client]");
+        if (!validateUsername(form.username.value.trim())) {
+            flash("Username must only contain 3-16 characters a-z, 0-9, _, or - [Client]", "danger");
+            return false;
         }
-
-        if (!isValidPassword(password)) {
-            isValid = false;
-            alert("Invalid password format [Client]");
+        if (form.password.value.trim() === "") {
+            flash("Password must not be empty [Client]", "danger");
+            return false;
         }
-        if (!password || !password.trim()) {
-            isValid = false;
-            alert("Password is required [Client]");
+        if (!validatePassword(form.password.value.trim())) {
+            flash("Password too short [Client]", "danger");
+            return false;
         }
-        
-        if (!confirm || !confirm.trim()) {
-            isValid = false;
-            alert("Confirm password is required [Client]");
+        if (form.confirm.value.trim() === "") {
+            flash("Confirm password must not be empty [Client]", "danger");
+            return false;
         }
-        if (password !== confirm) {
-            isValid = false;
-            alert("Passwords must match [Client]");
+        if (form.password.value.trim() !== form.confirm.value.trim()) {
+            flash("Passwords must match [Client]", "danger");
+            return false;
         }
-
         return true;
     }
 </script>
