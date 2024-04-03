@@ -1,4 +1,4 @@
-<?php
+<?php //rr42 4/3/2024
 require(__DIR__ . "/../../partials/nav.php");
 reset_session();
 ?>
@@ -21,7 +21,7 @@ reset_session();
     </div>
     <input type="submit" value="Register" />
 </form>
-<script>
+<script> //rr42 4/3/2024
     function validate(form) {
     var email = form.email.value;
     var username = form.username.value;
@@ -60,8 +60,8 @@ reset_session();
 }
 
 </script>
-<?php
-//TODO 2: add PHP Code  rr42 4/2/2024
+<?php //rr42 4/3/2024
+//TODO 2: add PHP Code  
 if (isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["confirm"]) && isset($_POST["username"])) {
     $email = se($_POST, "email", "", false);
     $password = se($_POST, "password", "", false);

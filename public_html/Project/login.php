@@ -1,4 +1,4 @@
-<?php //r42 4/3/2024
+<?php
 require_once(__DIR__ . "/../../partials/nav.php");
 ?>
 <form onsubmit="return validate(this)" method="POST">
@@ -13,33 +13,40 @@ require_once(__DIR__ . "/../../partials/nav.php");
     <input type="submit" value="Login" />
 </form>
 <script>
-    function validate(form) { //rr42 4/3/2024
-        //TODO 1: implement JavaScript validation
-        //ensure it returns false for an error and true for success
-        let isValid = true;
-        let email = form.email.value;
-        let password = form.password.value;
-        if (!email || !email.trim()) {
-            isValid = false;
-            alert("Email/Username is required [Client]");
+    function validate(form) {
+        var email = form.email.value;
+        var password = form.password.value;
+
+        // Check if email is empty
+        if (email.trim() === "") {
+            flash("Email must be provided [client]");
+            return false;
         }
-        if (!password || !password.trim()) {
-            isValid = false;
-            alert("Password is required [Client]");
+
+        // Check if email is in a valid format
+        if (!is_valid_email(email)) {
+            flash("Invalid email format [client]");
+            return false;
         }
-        if (!is_valid_username(email)) {
-            isValid = false;
-            alert("Invalid username format [Client]");
+
+        // Check if password is empty
+        if (password.trim() === "") {
+            flash("Password must be provided [client]");
+            return false;
         }
+
+        // Check if password length is less than 8 characters
         if (password.length < 8) {
-            isValid = false;
-            alert("Password must be at least 8 characters long [Client]");
+            flash("Password must be at least 8 characters long [client]");
+            return false;
         }
-        return isValid;
+
+        return true; // Return true if validation passes
     }
 </script>
+
 <?php
-//TODO 2: add PHP Code  rr42 4/3/2024
+//TODO 2: add PHP Code
 if (isset($_POST["email"]) && isset($_POST["password"])) {
     $email = se($_POST, "email", "", false); //$_POST["email"];
     $password = se($_POST, "password", "", false); //$_POST["password"];
@@ -50,23 +57,11 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
         flash("Email must be provided <br>");
         $hasError = true;
     }
-    //sanitize
-    //$email = filter_var($email, FILTER_SANITIZE_EMAIL);
-   
-    //validate
-    /*if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        flash("Please enter a valid email <br>");
-        $hasError = true;
-    }*/
+    
     if (str_contains($email, "@")) {
-        //sanitize
-        //$email = filter_var($email, FILTER_SANITIZE_EMAIL);
+        
         $email = sanitize_email($email);
-        //validate
-        /*if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            flash("Invalid email address");
-            $hasError = true;
-        }*/
+        
         if (!is_valid_email($email)) {
             flash("Invalid email address");
             $hasError = true;
