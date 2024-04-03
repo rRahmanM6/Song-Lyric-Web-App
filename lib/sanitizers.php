@@ -1,5 +1,5 @@
 <?php
-
+//rr42 4/2/2024
 function sanitize_email($email = "")
 {
     return filter_var(trim($email), FILTER_SANITIZE_EMAIL);

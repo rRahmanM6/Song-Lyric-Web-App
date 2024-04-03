@@ -22,7 +22,7 @@ reset_session();
     <input type="submit" value="Register" />
 </form>
 <script>
-    function validate(form) {  
+    function validate(form) {  //rr42 4/2/2024
         //TODO 1: implement JavaScript validation
         //ensure it returns false for an error and true for success
         if (form.email.value.trim() === "") {
@@ -61,7 +61,7 @@ reset_session();
     }
 </script>
 <?php
-//TODO 2: add PHP Code
+//TODO 2: add PHP Code  rr42 4/2/2024
 if (isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["confirm"]) && isset($_POST["username"])) {
     $email = se($_POST, "email", "", false);
     $password = se($_POST, "password", "", false);

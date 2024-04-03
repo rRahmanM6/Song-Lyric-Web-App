@@ -27,6 +27,14 @@ require_once(__DIR__ . "/../../partials/nav.php");
             isValid = false;
             alert("Password is required [Client]");
         }
+        if (!is_valid_username(email)) {
+            isValid = false;
+            alert("Invalid username format [Client]");
+        }
+        if (password.length < 8) {
+            isValid = false;
+            alert("Password must be at least 8 characters long [Client]");
+        }
         return isValid;
     }
 </script>
