@@ -30,18 +30,33 @@ reset_session();
         let password = form.password.value;
         let confirm = form.confirm.value;
         let username = form.username.value;
+        if (!isValidEmail(email)) {
+            isValid = false;
+            alert("Invalid email format [Client]");
+        }
         if (!email || !email.trim()) {
             isValid = false;
             alert("Email is required [Client]");
+        }
+
+        if (!isValidUsername(username)) {
+            isValid = false;
+            alert("Invalid username format [Client]");
         }
         if (!username || !username.trim()) {
             isValid = false;
             alert("Username is required [Client]");
         }
+
+        if (!isValidPassword(password)) {
+            isValid = false;
+            alert("Invalid password format [Client]");
+        }
         if (!password || !password.trim()) {
             isValid = false;
             alert("Password is required [Client]");
         }
+        
         if (!confirm || !confirm.trim()) {
             isValid = false;
             alert("Confirm password is required [Client]");
