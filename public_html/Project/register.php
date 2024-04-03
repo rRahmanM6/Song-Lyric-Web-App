@@ -23,42 +23,39 @@ reset_session();
 </form>
 <script>
     function validate(form) {  //rr42 4/2/2024
-        //TODO 1: implement JavaScript validation
-        //ensure it returns false for an error and true for success
-        if (form.email.value.trim() === "") {
-            flash("Email must not be empty [Client]", "danger");
-            return false;
-        }
-        if (!validateEmail(form.email.value.trim())) {
-            flash("Invalid email address [Client]", "danger");
-            return false;
-        }
-        if (form.username.value.trim() === "") {
-            flash("Username must not be empty [Client]", "danger");
-            return false;
-        }
-        if (!validateUsername(form.username.value.trim())) {
-            flash("Username must only contain 3-16 characters a-z, 0-9, _, or - [Client]", "danger");
-            return false;
-        }
-        if (form.password.value.trim() === "") {
-            flash("Password must not be empty [Client]", "danger");
-            return false;
-        }
-        if (!validatePassword(form.password.value.trim())) {
-            flash("Password too short [Client]", "danger");
-            return false;
-        }
-        if (form.confirm.value.trim() === "") {
-            flash("Confirm password must not be empty [Client]", "danger");
-            return false;
-        }
-        if (form.password.value.trim() !== form.confirm.value.trim()) {
-            flash("Passwords must match [Client]", "danger");
-            return false;
-        }
-        return true;
+    //TODO 1: implement JavaScript validation
+    //ensure it returns false for an error and true for success
+    var email = form.email.value;
+    var username = form.username.value;
+    var password = form.password.value;
+    var confirm = form.confirm.value;
+
+    // Regular expression for validating email format
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!email || !username || !password || !confirm) {
+        flash("All fields are required [client]");
+        return false;
     }
+
+    if (!emailRegex.test(email)) {
+        flash("Invalid email format [client]");
+        return false;
+    }
+
+    if (password !== confirm) {
+        flash("Passwords do not match [client]");
+        return false;
+    }
+
+    if (password.length < 8) {
+        flash("Password must be at least 8 characters long [client]");
+        return false;
+    }
+
+    return true;
+}
+
 </script>
 <?php
 //TODO 2: add PHP Code  rr42 4/2/2024
