@@ -22,16 +22,14 @@ reset_session();
     <input type="submit" value="Register" />
 </form>
 <script>
-    function validate(form) {  //rr42 4/2/2024
-    //TODO 1: implement JavaScript validation
-    //ensure it returns false for an error and true for success
+    function validate(form) {
     var email = form.email.value;
     var username = form.username.value;
     var password = form.password.value;
     var confirm = form.confirm.value;
 
-    // Regular expression for validating email format
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    var usernameRegex = /^[a-zA-Z0-9_-]{3,16}$/;
 
     if (!email || !username || !password || !confirm) {
         flash("All fields are required [client]");
@@ -40,6 +38,11 @@ reset_session();
 
     if (!emailRegex.test(email)) {
         flash("Invalid email format [client]");
+        return false;
+    }
+
+    if (!usernameRegex.test(username)) {
+        flash("Username must only contain 3-16 characters a-z, 0-9, _, or - [client]");
         return false;
     }
 
