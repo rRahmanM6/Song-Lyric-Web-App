@@ -1,4 +1,4 @@
-<?php
+<?php //rr42 4/3/2024
 function flash($msg = "", $color = "info")
 {
     $message = ["text" => $msg, "color" => $color];

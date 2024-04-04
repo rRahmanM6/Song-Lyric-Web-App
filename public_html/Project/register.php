@@ -21,41 +21,60 @@ reset_session();
     </div>
     <input type="submit" value="Register" />
 </form>
+
 <script>
-    function validate(form) {
-        //TODO 1: implement JavaScript validation
-        //ensure it returns false for an error and true for success
-        let isValid = true;
-        let email = form.email.value;
-        let password = form.password.value;
-        let confirm = form.confirm.value;
-        let username = form.username.value;
-        if (!email || !email.trim()) {
-            isValid = false;
-            alert("Email is required [Client]");
+    function validate(form) { //rr42 4/3/2024
+        var email = form.email.value.trim();
+        var username = form.username.value.trim();
+        var password = form.password.value.trim();
+        var confirm = form.confirm.value.trim();
+
+        if (email === "" || username === "" || password === "" || confirm === "") {
+            flash("All fields are required. [client]", "warning");
+            return false;
         }
-        if (!username || !username.trim()) {
-            isValid = false;
-            alert("Username is required [Client]");
+
+        if (!isValidEmail(email)) {
+            flash("Invalid email address. [client]", "warning");
+            return false;
         }
-        if (!password || !password.trim()) {
-            isValid = false;
-            alert("Password is required [Client]");
+
+        if (!isValidUsername(username)) {
+            flash("Username must only contain 3-16 characters a-z, 0-9, _, or - [client]", "warning");
+            return false;
         }
-        if (!confirm || !confirm.trim()) {
-            isValid = false;
-            alert("Confirm password is required [Client]");
+
+        if (!isValidPassword(password)) {
+            flash("Password must be at least 8 characters long. [client]", "warning");
+            return false;
         }
+
         if (password !== confirm) {
-            isValid = false;
-            alert("Passwords must match [Client]");
+            flash("Passwords do not match. [client]", "warning");
+            return false;
         }
 
         return true;
     }
+
+    function isValidEmail(email) {
+        var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+    }
+
+    function isValidUsername(username) {
+        var regex = /^[a-z0-9_-]{3,16}$/;
+        return regex.test(username);
+    }
+
+    function isValidPassword(password) {
+        return password.length >= 8;
+    }
+
 </script>
+
 <?php
-//TODO 2: add PHP Code
+//TODO 2: add PHP Code rr42 4/3/2024
 if (isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["confirm"]) && isset($_POST["username"])) {
     $email = se($_POST, "email", "", false);
     $password = se($_POST, "password", "", false);
