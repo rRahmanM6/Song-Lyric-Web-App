@@ -150,13 +150,13 @@ function isValidEmail(email) {
     let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 }
-
 function isValidUsername(username) {
-    return preg_match('/^[a-z0-9_-]{3,16}$/', $username);
+    // Regular expression pattern for username validation
+    let usernameRegex = /^[a-z0-9_-]{3,16}$/;
+    return usernameRegex.test(username);
 }
-function is_valid_password($password)
-{
-    return strlen($password) >= 8;
+function isValidPassword(password) {
+    return password.length >= 8;
 }
 
 </script>

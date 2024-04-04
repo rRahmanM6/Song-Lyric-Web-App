@@ -13,9 +13,18 @@ require_once(__DIR__ . "/../../partials/nav.php");
     <input type="submit" value="Login" />
 </form>
 <script> //rr42 4/3/2024
+        
+    function is_valid_email(email) {
+        // Basic email format validation
+        let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+        }
+
     function validate(form) {
         var email = form.email.value;
         var password = form.password.value;
+       
+        
 
         // Check if email is empty
         if (email.trim() === "") {
@@ -46,6 +55,7 @@ require_once(__DIR__ . "/../../partials/nav.php");
 </script>
 
 <?php //rr42 4/3/2024
+
 //TODO 2: add PHP Code
 if (isset($_POST["email"]) && isset($_POST["password"])) {
     $email = se($_POST, "email", "", false); //$_POST["email"];
