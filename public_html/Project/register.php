@@ -1,4 +1,4 @@
-<?php //rr42 4/3/2024
+<?php
 require(__DIR__ . "/../../partials/nav.php");
 reset_session();
 ?>
@@ -21,47 +21,60 @@ reset_session();
     </div>
     <input type="submit" value="Register" />
 </form>
-<script> //rr42 4/3/2024
+
+<script>
     function validate(form) {
-    var email = form.email.value;
-    var username = form.username.value;
-    var password = form.password.value;
-    var confirm = form.confirm.value;
+        var email = form.email.value.trim();
+        var username = form.username.value.trim();
+        var password = form.password.value.trim();
+        var confirm = form.confirm.value.trim();
 
-    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    var usernameRegex = /^[a-zA-Z0-9_-]{3,16}$/;
+        if (email === "" || username === "" || password === "" || confirm === "") {
+            flash("All fields are required. [client]", "warning");
+            return false;
+        }
 
-    if (!email || !username || !password || !confirm) {
-        flash("All fields are required [client]");
-        return false;
+        if (!isValidEmail(email)) {
+            flash("Invalid email address. [client]", "warning");
+            return false;
+        }
+
+        if (!isValidUsername(username)) {
+            flash("Username must only contain 3-16 characters a-z, 0-9, _, or - [client]", "warning");
+            return false;
+        }
+
+        if (!isValidPassword(password)) {
+            flash("Password must be at least 8 characters long. [client]", "warning");
+            return false;
+        }
+
+        if (password !== confirm) {
+            flash("Passwords do not match. [client]", "warning");
+            return false;
+        }
+
+        return true;
     }
 
-    if (!emailRegex.test(email)) {
-        flash("Invalid email format [client]");
-        return false;
+    function isValidEmail(email) {
+        var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
     }
 
-    if (!usernameRegex.test(username)) {
-        flash("Username must only contain 3-16 characters a-z, 0-9, _, or - [client]");
-        return false;
+    function isValidUsername(username) {
+        var regex = /^[a-z0-9_-]{3,16}$/;
+        return regex.test(username);
     }
 
-    if (password !== confirm) {
-        flash("Passwords do not match [client]");
-        return false;
+    function isValidPassword(password) {
+        return password.length >= 8;
     }
-
-    if (password.length < 8) {
-        flash("Password must be at least 8 characters long [client]");
-        return false;
-    }
-
-    return true;
-}
 
 </script>
-<?php //rr42 4/3/2024
-//TODO 2: add PHP Code  
+
+<?php
+//TODO 2: add PHP Code
 if (isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["confirm"]) && isset($_POST["username"])) {
     $email = se($_POST, "email", "", false);
     $password = se($_POST, "password", "", false);

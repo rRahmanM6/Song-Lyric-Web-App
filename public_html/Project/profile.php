@@ -113,53 +113,56 @@ $username = get_username();
 
 <script>
     function validate(form) {
-    let email = form.email.value;
-    let username = form.username.value;
-    let pw = form.newPassword.value;
-    let con = form.confirmPassword.value;
-    let isValid = true;
+        let email = form.email.value.trim();
+        let username = form.username.value.trim();
+        let pw = form.newPassword.value.trim();
+        let con = form.confirmPassword.value.trim();
 
-    // Validate email format
-    if (!isValidEmail(email)) {
-        flash("Please enter a valid email address [Client]", "warning");
-        isValid = false;
+        // Email validation
+        if (!isValidEmail(email)) {
+            flash("Please enter a valid email address. [client]", "warning");
+            return false;
+        }
+
+        // Username validation
+        if (!isValidUsername(username)) {
+            flash("Invalid username [client]", "warning");
+            return false;
+        }
+
+        // Password validation
+        if (!isValidPassword(pw)) {
+            flash("Password must be at least 8 characters long. [client]", "warning");
+            return false;
+        }
+
+        if (pw !== con) {
+            flash("Password and Confirm password must match. [client]", "warning");
+            return false;
+        }
+
+        return true;
     }
 
-    // Validate username format (if any specific requirements)
-    if (!isValidUsername(username)) {
-        flash("Please enter a valid username [Client]", "warning");
-        isValid = false;
+    function isValidEmail(email) {
+        // Email validation regex
+        let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
     }
 
-    if (!isValidPassword(username)) {
-        flash("Please enter a valid password [Client]", "warning");
-        isValid = false;
+    function isValidUsername(username) {
+        // Username validation regex
+        let usernameRegex = /^[a-z0-9_-]{3,16}$/;
+        return usernameRegex.test(username);
     }
 
-    // Validate password and confirm password match
-    if (pw !== con) {
-        flash("Password and Confirm password must match [Client]", "warning");
-        isValid = false;
+    function isValidPassword(password) {
+        return password.length >= 8;
     }
 
-    return isValid;
-}
-
-function isValidEmail(email) {
-    // Basic email format validation
-    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
-function isValidUsername(username) {
-    // Regular expression pattern for username validation
-    let usernameRegex = /^[a-z0-9_-]{3,16}$/;
-    return usernameRegex.test(username);
-}
-function isValidPassword(password) {
-    return password.length >= 8;
-}
 
 </script>
+
 <?php
 require_once(__DIR__ . "/../../partials/flash.php");
 ?>

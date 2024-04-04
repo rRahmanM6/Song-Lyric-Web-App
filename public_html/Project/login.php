@@ -1,4 +1,4 @@
-<?php //rr42 4/3/2024
+<?php
 require_once(__DIR__ . "/../../partials/nav.php");
 ?>
 <form onsubmit="return validate(this)" method="POST">
@@ -12,50 +12,46 @@ require_once(__DIR__ . "/../../partials/nav.php");
     </div>
     <input type="submit" value="Login" />
 </form>
-<script> //rr42 4/3/2024
-        
-    function is_valid_email(email) {
-        // Basic email format validation
-        let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-        }
 
+<script>
     function validate(form) {
-        var email = form.email.value;
-        var password = form.password.value;
-       
+        var emailField = form.email.value.trim();
+        var passwordField = form.password.value.trim();
         
-
-        // Check if email is empty
-        if (email.trim() === "") {
-            flash("Email must be provided [client]");
+        if (emailField === "") {
+            flash("Email/Username must be provided [client]", "warning");
+            return false;
+        }
+        
+        if (passwordField === "") {
+            flash("Password must be provided [client]", "warning");
             return false;
         }
 
-        // Check if email is in a valid format
-        if (!is_valid_email(email)) {
-            flash("Invalid email format [client]");
+        if (emailField.includes("@")) {
+            if (!isValidEmail(emailField)) {
+                flash("Please enter a valid email address [client]", "warning");
+                return false;
+            }
+
+        }
+        
+        if (passwordField.length < 8) {
+            flash("Password must be at least 8 characters long [client]", "warning");
             return false;
         }
 
-        // Check if password is empty
-        if (password.trim() === "") {
-            flash("Password must be provided [client]");
-            return false;
-        }
-
-        // Check if password length is less than 8 characters
-        if (password.length < 8) {
-            flash("Password must be at least 8 characters long [client]");
-            return false;
-        }
-
-        return true; // Return true if validation passes
+        return true;
     }
+
+    function isValidEmail(email) {
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
 </script>
 
-<?php //rr42 4/3/2024
-
+<?php
 //TODO 2: add PHP Code
 if (isset($_POST["email"]) && isset($_POST["password"])) {
     $email = se($_POST, "email", "", false); //$_POST["email"];
@@ -67,11 +63,23 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
         flash("Email must be provided <br>");
         $hasError = true;
     }
-    
+    //sanitize
+    //$email = filter_var($email, FILTER_SANITIZE_EMAIL);
+   
+    //validate
+    /*if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        flash("Please enter a valid email <br>");
+        $hasError = true;
+    }*/
     if (str_contains($email, "@")) {
-        
+        //sanitize
+        //$email = filter_var($email, FILTER_SANITIZE_EMAIL);
         $email = sanitize_email($email);
-        
+        //validate
+        /*if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            flash("Invalid email address");
+            $hasError = true;
+        }*/
         if (!is_valid_email($email)) {
             flash("Invalid email address");
             $hasError = true;
