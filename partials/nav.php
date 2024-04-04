@@ -25,6 +25,7 @@ session_start();
 
 ?>
 <!-- include css and js files -->
+<!--rr42 4/3/2024-->
 <link rel="stylesheet" href="<?php echo get_url('styles.css'); ?>">
 <script src="<?php echo get_url('helpers.js'); ?>"></script>
 <nav>

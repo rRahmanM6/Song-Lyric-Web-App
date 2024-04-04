@@ -1,4 +1,4 @@
-<?php
+<?php //rr42 4/3/2024
 require_once(__DIR__ . "/../../partials/nav.php");
 ?>
 <form onsubmit="return validate(this)" method="POST">
@@ -12,7 +12,7 @@ require_once(__DIR__ . "/../../partials/nav.php");
     </div>
     <input type="submit" value="Login" />
 </form>
-<script>
+<script> //rr42 4/3/2024
     function validate(form) {
         var email = form.email.value;
         var password = form.password.value;
@@ -45,7 +45,7 @@ require_once(__DIR__ . "/../../partials/nav.php");
     }
 </script>
 
-<?php
+<?php //rr42 4/3/2024
 //TODO 2: add PHP Code
 if (isset($_POST["email"]) && isset($_POST["password"])) {
     $email = se($_POST, "email", "", false); //$_POST["email"];
