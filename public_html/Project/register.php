@@ -23,7 +23,7 @@ reset_session();
 </form>
 
 <script>
-    function validate(form) {
+    function validate(form) { //rr42 4/3/2024
         var email = form.email.value.trim();
         var username = form.username.value.trim();
         var password = form.password.value.trim();
@@ -74,7 +74,7 @@ reset_session();
 </script>
 
 <?php
-//TODO 2: add PHP Code
+//TODO 2: add PHP Code rr42 4/3/2024
 if (isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["confirm"]) && isset($_POST["username"])) {
     $email = se($_POST, "email", "", false);
     $password = se($_POST, "password", "", false);

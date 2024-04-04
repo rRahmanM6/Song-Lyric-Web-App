@@ -13,7 +13,7 @@ require_once(__DIR__ . "/../../partials/nav.php");
     <input type="submit" value="Login" />
 </form>
 
-<script>
+<script> //rr42 4/3/2024
     function validate(form) {
         var emailField = form.email.value.trim();
         var passwordField = form.password.value.trim();
@@ -52,7 +52,7 @@ require_once(__DIR__ . "/../../partials/nav.php");
 </script>
 
 <?php
-//TODO 2: add PHP Code
+//TODO 2: add PHP Code  rr42 4/3/2024
 if (isset($_POST["email"]) && isset($_POST["password"])) {
     $email = se($_POST, "email", "", false); //$_POST["email"];
     $password = se($_POST, "password", "", false); //$_POST["password"];
@@ -63,23 +63,10 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
         flash("Email must be provided <br>");
         $hasError = true;
     }
-    //sanitize
-    //$email = filter_var($email, FILTER_SANITIZE_EMAIL);
-   
-    //validate
-    /*if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        flash("Please enter a valid email <br>");
-        $hasError = true;
-    }*/
+
     if (str_contains($email, "@")) {
-        //sanitize
-        //$email = filter_var($email, FILTER_SANITIZE_EMAIL);
         $email = sanitize_email($email);
-        //validate
-        /*if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            flash("Invalid email address");
-            $hasError = true;
-        }*/
+
         if (!is_valid_email($email)) {
             flash("Invalid email address");
             $hasError = true;
