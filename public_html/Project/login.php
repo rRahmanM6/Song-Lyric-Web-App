@@ -1,19 +1,15 @@
 <?php
 require_once(__DIR__ . "/../../partials/nav.php");
 ?>
-<form onsubmit="return validate(this)" method="POST">
-    <div>
-        <label for="email">Email/Username</label>
-        <input type="text" name="email" required />
-    </div>
-    <div>
-        <label for="pw">Password</label>
-        <input type="password" id="pw" name="password" required minlength="8" />
-    </div>
-    <input type="submit" value="Login" />
-</form>
+<div class="container-fluid">
+    <form onsubmit="return validate(this)" method="POST">
+        <?php render_input(["type" => "text", "id" => "email", "name" => "email", "label" => "Email", "rules" => ["required" => true]]); ?>
+        <?php render_input(["type" => "password", "id" => "password", "name" => "password", "label" => "Password", "rules" => ["required" => true, "minlength" => 8]]); ?>
+        <?php render_button(["text" => "Login", "type" => "submit"]); ?>
+    </form>
+</div>
 
-<script> //rr42 4/3/2024
+<script>
     function validate(form) {
         var emailField = form.email.value.trim();
         var passwordField = form.password.value.trim();
