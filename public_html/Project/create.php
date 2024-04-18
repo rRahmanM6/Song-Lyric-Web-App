@@ -5,18 +5,14 @@ is_logged_in(true);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $title = trim($_POST["title"]);
-// Trim and limit the length of the artist field to 40 characters
-$artist = substr(trim($_POST["artist"]), 0, 40);
+    $artist = substr(trim($_POST["artist"]), 0, 40);
     $image = trim($_POST["image"]);
     $lyrics = trim($_POST["lyrics"]);
-
-    // Auto generate label
     $label = strtolower(str_replace(' ', '-', "$artist-$title-lyrics"));
 
-    // Insert into database
     try {
         $db = getDB();
-        $query = "INSERT INTO SONGS (label, title, artist, image, lyrics) VALUES (?, ?, ?, ?, ?)";
+        $query = "INSERT INTO SONGS (label, title, artist, image, lyrics, is_api) VALUES (?, ?, ?, ?, ?, 0)";
         $stmt = $db->prepare($query);
         $stmt->execute([$label, $title, $artist, $image, $lyrics]);
         $success = true;

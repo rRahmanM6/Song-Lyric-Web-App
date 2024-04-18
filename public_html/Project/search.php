@@ -35,7 +35,7 @@ if (isset($_GET["song"])) {
         $songExists = $stmt->fetch();
 
         if (!$songExists) {
-            $query = "INSERT INTO SONGS (label, title, artist, image, lyrics) VALUES (?, ?, ?, ?, '')"; // Provide a default value or allow NULL values for 'lyrics'
+            $query = "INSERT INTO SONGS (label, title, artist, image, lyrics, is_api) VALUES (?, ?, ?, ?, '', 1)";
             $stmt = $db->prepare($query);
             $stmt->execute([$songId, $songName, $artist, $image]);
 
