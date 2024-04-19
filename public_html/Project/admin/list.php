@@ -1,5 +1,7 @@
 <?php //rr42 4/18/2024
 require(__DIR__ . "/../../../partials/nav.php");
+require(__DIR__ . "/../../../partials/flash.php");
+
 if (!has_role("Admin")) {
     flash("You don't have permission to view this page", "warning");
     die(header("Location: $BASE_PATH" . "/home.php"));
@@ -9,13 +11,16 @@ function deleteSong($id)
     $db = getDB();
     $stmt = $db->prepare("DELETE FROM SONGS WHERE id = ?");
     $stmt->execute([$id]);
+    flash("Song deleted successfully", "success");
 }
+
 if (isset($_POST['delete_id'])) {
     $id = $_POST['delete_id'];
     deleteSong($id);
-    header("Location: $BASE_PATH" . "/list.php");
+    header("Location: list.php");
     exit;
 }
+
 $perPage = 10;
 if (isset($_GET['perPage']) && is_numeric($_GET['perPage'])) {
     $perPage = max(0, min(100, $_GET['perPage']));
