@@ -74,7 +74,7 @@ $songs = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </tr>
         <?php foreach ($songs as $song) : ?>
             <tr>
-                <td><a href="search.php?song=<?php echo urlencode($song['title'] . ' ' . $song['artist']); ?>"><?php echo $song['title']; ?></a></td>
+                <td><a href="../search.php?song=<?php echo urlencode($song['title'] . ' ' . $song['artist']); ?>"><?php echo $song['title']; ?></a></td>
                 <td><?php echo $song['artist']; ?></td>
                 <td><?php echo $song['created']; ?></td>
                 <td>
