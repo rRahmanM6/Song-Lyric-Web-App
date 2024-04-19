@@ -39,9 +39,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt = $db->prepare($query);
     $stmt->execute([$title, $artist, $image, $lyrics, $songId]);
 
-    // Redirect to list page after updating
     flash("Song updated successfully", "success");
-    die(header("Location: $BASE_PATH" . "/list.php"));
+    header("Location: list.php");
+
+
 }
 ?>
 

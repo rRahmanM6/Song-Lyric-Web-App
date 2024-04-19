@@ -1,53 +1,37 @@
-<?php
+<?php //rr42 4/18/2024
 require(__DIR__ . "/../../../partials/nav.php");
-
-// Check if the user has admin role
 if (!has_role("Admin")) {
     flash("You don't have permission to view this page", "warning");
     die(header("Location: $BASE_PATH" . "/home.php"));
 }
-
-// Function to delete a song from the database
 function deleteSong($id)
 {
     $db = getDB();
     $stmt = $db->prepare("DELETE FROM SONGS WHERE id = ?");
     $stmt->execute([$id]);
 }
-
-// Check if the delete button is clicked
 if (isset($_POST['delete_id'])) {
     $id = $_POST['delete_id'];
     deleteSong($id);
-    // Redirect back to list.php after deletion
     header("Location: $BASE_PATH" . "/list.php");
     exit;
 }
-
-// Default number of records per page
 $perPage = 10;
-
-// Validate and set the number of records per page
 if (isset($_GET['perPage']) && is_numeric($_GET['perPage'])) {
-    $perPage = max(0, min(100, $_GET['perPage'])); // Ensure the value is between 0 and 100
+    $perPage = max(0, min(100, $_GET['perPage']));
 }
-
-// Determine sorting order
-$orderBy = "title"; // Default sorting column
+$orderBy = "title";
 if (isset($_GET['sort'])) {
     $sort = strtolower($_GET['sort']);
     if (in_array($sort, ['title', 'artist', 'created'])) {
         $orderBy = $sort;
     }
 }
-
-// Fetch songs from the database
 $db = getDB();
 $stmt = $db->prepare("SELECT id, title, artist, created FROM SONGS ORDER BY $orderBy LIMIT $perPage");
 $stmt->execute();
 $songs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -64,11 +48,10 @@ $songs = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <input type="number" id="perPage" name="perPage" value="<?php echo $perPage; ?>" min="0" max="100">
         <button type="submit">Apply</button>
     </form>
-
     <table border="1">
         <tr>
             <th><a href="?sort=title">Title</a></th>
-            <th><a href="?sort=artist">Artist</a></th>
+            <th><a href="?sort=artist">Artist</a></th> <!--rr42 4/18/2024!-->
             <th><a href="?sort=created">Created</a></th>
             <th>Actions</th>
         </tr>

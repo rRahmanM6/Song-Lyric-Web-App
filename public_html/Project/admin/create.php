@@ -1,15 +1,12 @@
-<?php
+<?php //rr42 4/18/2024
 require(__DIR__ . "/../../../partials/nav.php");
 is_logged_in(true);
-
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $title = trim($_POST["title"]);
     $artist = substr(trim($_POST["artist"]), 0, 40);
     $image = trim($_POST["image"]);
     $lyrics = trim($_POST["lyrics"]);
     $label = strtolower(str_replace(' ', '-', "$artist-$title-lyrics"));
-
     try {
         $db = getDB();
         $query = "INSERT INTO SONGS (label, title, artist, image, lyrics, is_api) VALUES (?, ?, ?, ?, ?, 0)";
@@ -21,16 +18,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Song</title>
 </head>
-
 <body>
     <h1>Create Song</h1>
     <?php if (isset($success) && $success) : ?>
@@ -58,5 +52,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <button type="submit">Create Song</button>
     </form>
 </body>
-
 </html>
