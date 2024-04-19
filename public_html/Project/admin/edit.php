@@ -1,6 +1,5 @@
 <?php
-require(__DIR__ . "/../../partials/nav.php");
-is_logged_in(true);
+require(__DIR__ . "/../../../partials/nav.php");
 
 // Check if user has admin role
 if (!has_role("Admin")) {

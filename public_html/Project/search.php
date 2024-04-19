@@ -32,9 +32,9 @@ if (isset($_GET["song"])) {
 
         $stmt = $db->prepare("SELECT * FROM SONGS WHERE label = ?");
         $stmt->execute([$songId]);
-        $songExists = $stmt->fetch();
+        $song = $stmt->fetch();
 
-        if (!$songExists) {
+        if (!$song) {
             $query = "INSERT INTO SONGS (label, title, artist, image, lyrics, is_api) VALUES (?, ?, ?, ?, '', 1)";
             $stmt = $db->prepare($query);
             $stmt->execute([$songId, $songName, $artist, $image]);
@@ -65,7 +65,7 @@ if (isset($_GET["song"])) {
             <input type="submit" value="Fetch Song" />
         </div>
     </form>
-    <div class="row ">
+    <div class="row">
         <?php if (isset($result) && !empty($result)) : ?>
             <?php
             $firstSong = $result[0];
@@ -89,7 +89,7 @@ if (isset($_GET["song"])) {
                     $lyricsData = json_decode($lyricsResult["response"], true);
                     if (isset($lyricsData['lyrics'])) {
                         $lyrics = $lyricsData['lyrics'];
-                        $query = "INSERT INTO SONGS (label, title, artist, image, lyrics) VALUES (?, ?, ?, ?, ?)";
+                        $query = "INSERT INTO SONGS (label, title, artist, image, lyrics, is_api) VALUES (?, ?, ?, ?, ?, 1)";
                         $stmt = $db->prepare($query);
                         $stmt->execute([$firstSongId, $songName, $artist, $image, $lyrics]);
                     } else {
@@ -104,6 +104,18 @@ if (isset($_GET["song"])) {
             echo "<p>Artist: $artist</p>";
             echo "<img src='$image' alt='Song Image' style='max-width: 400px; max-height: 400px;'>";
             echo "<pre>$lyrics</pre>";
+
+            // Check if user is admin
+            if (has_role("Admin")) {
+                $editSongId = $song['id']; // Separate variable for correct id value
+                echo "<div class='admin-actions'>";
+                echo "<a href='edit.php?id=$editSongId' class='btn btn-primary'>Edit</a>";
+                echo "<form method='POST' class='delete-form'>";
+                echo "<input type='hidden' name='delete_id' value='$firstSongId'>";
+                echo "<button type='submit' class='btn btn-danger' onclick='return confirm(\"Are you sure you want to delete this song?\")'>Delete</button>";
+                echo "</form>";
+                echo "</div>";
+            }
             ?>
         <?php endif; ?>
     </div>
