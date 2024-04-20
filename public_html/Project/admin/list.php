@@ -56,11 +56,11 @@ $songs = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <table border="1">
         <tr>
             <th><a href="?sort=title">Title</a></th>
-            <th><a href="?sort=artist">Artist</a></th> <!--rr42 4/18/2024!-->
+            <th><a href="?sort=artist">Artist</a></th> 
             <th><a href="?sort=created">Created</a></th>
             <th>Actions</th>
         </tr>
-        <?php foreach ($songs as $song) : ?>
+        <?php foreach ($songs as $song) : ?><!--rr42 4/18/2024!-->
             <tr>
                 <td><a href="../search.php?song=<?php echo urlencode($song['title'] . ' ' . $song['artist']); ?>"><?php echo $song['title']; ?></a></td>
                 <td><?php echo $song['artist']; ?></td>
