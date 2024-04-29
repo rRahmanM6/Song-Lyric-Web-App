@@ -1,4 +1,4 @@
-<?php //rr42 4/18/2024
+<?php
 require(__DIR__ . "/../../partials/nav.php");
 if (isset($_GET["song"])) {
     $song = trim($_GET["song"]);
@@ -49,7 +49,7 @@ if (isset($_GET["song"])) {
 }
 ?>
 
-<div class="container-fluid">  <!--r42 4/18/2024!-->
+<div class="container-fluid">
     <h1>Song Lyrics</h1>
     <form>
         <div>
