@@ -26,4 +26,16 @@ function getUserFavorites($userId)
     $favorites = $stmt->fetchAll(PDO::FETCH_COLUMN);
     return $favorites;
 }
+
+function removeAllFavorites($userId)
+{
+    // Get the database connection
+    $db = getDB();
+
+    // Prepare the SQL statement to delete all favorites associated with the user
+    $stmt = $db->prepare("DELETE FROM UserSongs WHERE user_id = ?");
+
+    // Execute the SQL statement with the user ID parameter
+    $stmt->execute([$userId]);
+}
 ?>
