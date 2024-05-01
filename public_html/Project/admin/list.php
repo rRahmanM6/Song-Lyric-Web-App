@@ -1,10 +1,10 @@
-<?php //rr42 4/18/2024
+<?php
 require(__DIR__ . "/../../../partials/nav.php");
 require(__DIR__ . "/../../../partials/flash.php");
 
 if (!has_role("Admin")) {
     flash("You don't have permission to view this page", "warning");
-    die(header("Location: $BASE_PATH" . "/home.php"));
+    die(header("Location: $BASE_PATH" . "/search.php"));
 }
 function deleteSong($id)
 {
@@ -60,7 +60,7 @@ $songs = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <th><a href="?sort=created">Created</a></th>
             <th>Actions</th>
         </tr>
-        <?php foreach ($songs as $song) : ?><!--rr42 4/18/2024!-->
+        <?php foreach ($songs as $song) : ?>
             <tr>
                 <td><a href="../search.php?song=<?php echo urlencode($song['title'] . ' ' . $song['artist']); ?>"><?php echo $song['title']; ?></a></td>
                 <td><?php echo $song['artist']; ?></td>

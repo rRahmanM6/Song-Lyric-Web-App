@@ -1,4 +1,4 @@
-<?php //rr42 4/18/2024
+<?php
 require(__DIR__ . "/../../partials/nav.php");
 if (isset($_GET["song"])) {
     $song = trim($_GET["song"]);
@@ -47,9 +47,21 @@ if (isset($_GET["song"])) {
         }
     }
 }
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['add_to_favorites'])) {
+        $songId = $_POST['add_to_favorites'];
+        $userId = get_user_id();
+        addToFavorites($userId, $songId);
+    } elseif (isset($_POST['remove_from_favorites'])) {
+        $songId = $_POST['remove_from_favorites'];
+        $userId = get_user_id();
+        removeFromFavorites($userId, $songId);
+    }
+}
 ?>
 
-<div class="container-fluid">  <!--r42 4/18/2024!-->
+<div class="container-fluid">
     <h1>Song Lyrics</h1>
     <form>
         <div>
@@ -95,6 +107,20 @@ if (isset($_GET["song"])) {
             echo "<p>Artist: $artist</p>";
             echo "<img src='$image' alt='Song Image' style='max-width: 400px; max-height: 400px;'>";
             echo "<pre>$lyrics</pre>";
+            if (is_logged_in()) {
+                $userFavorites = getUserFavorites(get_user_id());
+                if (in_array($firstSongId, $userFavorites)) {
+                    echo "<form method='POST'>";
+                    echo "<input type='hidden' name='remove_from_favorites' value='$firstSongId'>";
+                    echo "<button type='submit'>Remove from Favorites</button>";
+                    echo "</form>";
+                } else {
+                    echo "<form method='POST'>";
+                    echo "<input type='hidden' name='add_to_favorites' value='$firstSongId'>";
+                    echo "<button type='submit'>Add to Favorites</button>";
+                    echo "</form>";
+                }
+            }
             if (has_role("Admin")) {
                 $editSongId = $song['id'];
                 echo "<div class='admin-actions'>";
@@ -106,10 +132,10 @@ if (isset($_GET["song"])) {
                 echo "</div>";
             }
             ?>
-        <?php endif; ?>
+        <?php endif;
+        ?>
     </div>
 </div>
-
 <?php
 require(__DIR__ . "/../../partials/flash.php");
 ?>
