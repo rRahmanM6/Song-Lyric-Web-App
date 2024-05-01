@@ -1,6 +1,11 @@
-<?php //rr42 4/18/2024
+<?php 
 require(__DIR__ . "/../../../partials/nav.php");
-is_logged_in(true);
+
+if (!has_role("Admin")) {
+    flash("You don't have permission to view this page", "warning");
+    die(header("Location: " . get_url("search.php")));
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $title = trim($_POST["title"]);
     $artist = substr(trim($_POST["artist"]), 0, 40);

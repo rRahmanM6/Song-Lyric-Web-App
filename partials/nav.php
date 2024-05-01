@@ -34,14 +34,14 @@ session_start();
 <nav>
     <ul>
         <?php if (is_logged_in()) : ?>
-            <li><a href="<?php echo get_url('home.php'); ?>">Home</a></li>
-            <li><a href="<?php echo get_url('profile.php'); ?>">Profile</a></li>
             <li><a href="<?php echo get_url('search.php'); ?>">Search</a></li>
+            <li><a href="<?php echo get_url('profile.php'); ?>">Profile</a></li>
+            <li><a href="<?php echo get_url('favorites.php'); ?>">Favorites</a></li>
         <?php endif; ?>
         <?php if (!is_logged_in()) : ?>
+            <li><a href="<?php echo get_url('search.php'); ?>">Search</a></li>
             <li><a href="<?php echo get_url('login.php'); ?>">Login</a></li>
             <li><a href="<?php echo get_url('register.php'); ?>">Register</a></li>
-            <li><a href="<?php echo get_url('search.php'); ?>">Search</a></li>
         <?php endif; ?>
         <?php if (has_role("Admin")) : ?>
             <li><a href="<?php echo get_url('admin/create_role.php'); ?>">Create Role</a></li>
@@ -49,6 +49,11 @@ session_start();
             <li><a href="<?php echo get_url('admin/assign_roles.php'); ?>">Assign Roles</a></li>
             <li><a href="<?php echo get_url('admin/list.php'); ?>">View Database</a></li>
             <li><a href="<?php echo get_url('admin/create.php'); ?>">Create Song</a></li>
+            <li><a href="<?php echo get_url('admin/allFavorites.php'); ?>">All Favorites</a></li>
+            <li><a href="<?php echo get_url('admin/newAssociation.php'); ?>">New Association</a></li>
+            <li><a href="<?php echo get_url('admin/noAssociation.php'); ?>">Non-Associated</a></li>
+
+
         <?php endif; ?>
         <?php if (is_logged_in()) : ?>
             <li><a href="<?php echo get_url('logout.php'); ?>">Logout</a></li>
