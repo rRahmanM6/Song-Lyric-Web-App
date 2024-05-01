@@ -1,19 +1,16 @@
 <?php
-//note we need to go up 1 more directory
 require(__DIR__ . "/../../../partials/nav.php");
 
 if (!has_role("Admin")) {
     flash("You don't have permission to view this page", "warning");
     die(header("Location: $BASE_PATH" . "/search.php"));
 }
-//attempt to apply
 if (isset($_POST["users"]) && isset($_POST["roles"])) {
-    $user_ids = $_POST["users"]; //se() doesn't like arrays so we'll just do this
-    $role_ids = $_POST["roles"]; //se() doesn't like arrays so we'll just do this
+    $user_ids = $_POST["users"]; 
+    $role_ids = $_POST["roles"]; 
     if (empty($user_ids) || empty($role_ids)) {
         flash("Both users and roles need to be selected", "warning");
     } else {
-        //for sake of simplicity, this will be a tad inefficient
         $db = getDB();
         $stmt = $db->prepare("INSERT INTO UserRoles (user_id, role_id, is_active) VALUES (:uid, :rid, 1) 
         ON DUPLICATE KEY UPDATE is_active = !is_active");
@@ -30,7 +27,6 @@ if (isset($_POST["users"]) && isset($_POST["roles"])) {
     }
 }
 
-//get active roles
 $active_roles = [];
 $db = getDB();
 $stmt = $db->prepare("SELECT id, name, description FROM Roles WHERE is_active = 1 LIMIT 10");
@@ -44,7 +40,6 @@ try {
     flash(var_export($e->errorInfo, true), "danger");
 }
 
-//search for user by username
 $users = [];
 $username = "";
 if (isset($_POST["username"])) {
@@ -74,7 +69,7 @@ if (isset($_POST["username"])) {
 <div class="container-fluid">
     <h1>Assign Roles</h1>
     <form method="POST">
-        <?php render_input(["type" => "search", "name" => "username", "placeholder" => "Username Search", "value" => $username]);/*lazy value to check if form submitted, not ideal*/ ?>
+        <?php render_input(["type" => "search", "name" => "username", "placeholder" => "Username Search", "value" => $username]); ?>
         <?php render_button(["text" => "Search", "type" => "submit"]); ?>
     </form>
     <form method="POST">
@@ -116,6 +111,5 @@ if (isset($_POST["username"])) {
     </form>
 </div>
 <?php
-//note we need to go up 1 more directory
 require_once(__DIR__ . "/../../../partials/flash.php");
 ?>

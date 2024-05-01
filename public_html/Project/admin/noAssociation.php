@@ -10,7 +10,6 @@ if (!has_role("Admin")) {
 
 $db = getDB();
 
-// Fetch the total count of records without association
 $totalStmt = $db->query("SELECT COUNT(*) FROM SONGS WHERE label NOT IN (SELECT song_label FROM UserSongs)");
 $totalNoAssociation = $totalStmt->fetchColumn();
 

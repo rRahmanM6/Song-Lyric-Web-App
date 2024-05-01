@@ -1,9 +1,11 @@
-<?php //rr42 4/19/2024
+<?php
 require(__DIR__ . "/../../../partials/nav.php");
+
 if (!has_role("Admin")) {
     flash("You don't have permission to view this page", "warning");
     die(header("Location: $BASE_PATH" . "/search.php"));
 }
+
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     flash("Invalid song ID", "danger");
     die(header("Location: $BASE_PATH" . "/list.php"));
@@ -31,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: list.php");
 }
 ?>
-<!DOCTYPE html> <!--rr42 4/19/2024!-->
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
