@@ -1,18 +1,16 @@
-<?php
+<?php //rr42 4/30/2024
 require(__DIR__ . "/../../partials/nav.php");
 require(__DIR__ . "/../../partials/flash.php");
 is_logged_in();
 
 $userFavorites = getUserFavorites(get_user_id());
 $db = getDB();
-
 $limit = isset($_GET['limit']) ? $_GET['limit'] : 10;
 if (!is_numeric($limit) || $limit < 1 || $limit > 100) {
     flash("Invalid limit value. Please enter a number between 1 and 100.", "danger");
     header("Location: {$_SERVER['PHP_SELF']}");
     exit;
 }
-
 $favoriteSongs = [];
 $displayedItemsCount = 0; 
 foreach ($userFavorites as $songId) {
@@ -29,10 +27,9 @@ foreach ($userFavorites as $songId) {
     }
 }
 $totalSongs = count($userFavorites); 
-
 ?>
 
-<div class="container-fluid">
+<div class="container-fluid"> <!--rr42 4/30/2024!-->
     <h1>My Favorites</h1>
     <div class="row">
         <div class="col-md-12">
@@ -40,7 +37,6 @@ $totalSongs = count($userFavorites);
             <p><?php echo $displayedItemsCount; ?> items displayed</p>
         </div>
     </div>
-
 
     <div class="row">
         <div class="col-md-12">
@@ -67,7 +63,7 @@ $totalSongs = count($userFavorites);
                         <input type="hidden" name="user_id" value="<?php echo get_user_id(); ?>">
                         <input type="hidden" name="song_label" value="<?php echo $song['label']; ?>">
                         <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to remove this favorite?')">Remove Favorite</button>
-                    </form>
+                    </form> 
                 </div>
             </div>
         <?php endforeach; ?>

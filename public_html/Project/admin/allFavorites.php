@@ -1,4 +1,4 @@
-<?php
+<?php //rr42 4/30/2024
 require(__DIR__ . "/../../../partials/nav.php");
 require(__DIR__ . "/../../../partials/flash.php");
 
@@ -46,9 +46,7 @@ if (isset($_GET['sort'])) {
 }
 
 $db = getDB();
-// Get the partial username from the form input
 $partialUsername = isset($_GET['username']) ? $_GET['username'] : '';
-// Modify the SQL query to filter results based on the partial username
 $stmt = $db->prepare("SELECT SONGS.title, SONGS.artist, SONGS.label, COUNT(UserSongs.user_id) AS total_users, GROUP_CONCAT(Users.username) AS favorited_by 
                             FROM UserSongs 
                             JOIN SONGS ON UserSongs.song_label = SONGS.label 
@@ -70,15 +68,13 @@ $favoriteSongs = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <title>All Favorites</title>
 </head>
 
-<body>
+<body> <!--rr42 4/30/2024!-->
     <div class="container-fluid">
         <h1>All Favorites</h1>
 
-        <!-- Display total number of items and filter form -->
         <div class="row">
             <div class="col-md-6">
                 <?php
-                // Fetch the total number of items in the UserSongs table
                 $stmt = $db->query("SELECT COUNT(*) FROM UserSongs");
                 $totalItems = $stmt->fetchColumn();
                 ?>
@@ -86,7 +82,6 @@ $favoriteSongs = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <form method="GET" class="form-inline">
                     <label for="perPage">Records per page:</label>
                     <input type="number" id="perPage" name="perPage" value="<?php echo $perPage; ?>" min="0" max="100" class="form-control mr-2">
-                    <!-- Add input field for entering partial username -->
                     <label for="username">Filter by username:</label>
                     <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($partialUsername); ?>" class="form-control mr-2">
                     <button type="submit" class="btn btn-primary">Apply Filter</button>
@@ -94,7 +89,6 @@ $favoriteSongs = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
 
-        <!-- Display favorite songs in a table -->
         <div class="row mt-4">
             <div class="col-md-12">
                 <table class="table table-striped">
@@ -131,7 +125,6 @@ $favoriteSongs = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </tbody>
                 </table>
                 <?php if (count($favoriteSongs) > 0 && !empty($partialUsername)) : ?>
-                    <!-- Add button to delete all records associated with the matching user -->
                     <form method="POST">
                         <input type="hidden" name="delete_username" value="<?php echo htmlspecialchars($partialUsername); ?>">
                         <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete all records associated with this user?')">Delete All Records Associated with User</button>

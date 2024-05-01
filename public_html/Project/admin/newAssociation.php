@@ -1,10 +1,7 @@
-<?php
+<?php //rr42 4/30/2024
 require(__DIR__ . "/../../../partials/nav.php");
 require(__DIR__ . "/../../../partials/flash.php");
-
-
 $db = getDB();
-
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST["users"]) && isset($_POST["songs"])) {
         $user_ids = $_POST["users"];
@@ -43,7 +40,7 @@ if (isset($_GET["search-query"])) {
 }
 ?>
 
-<div class="container-fluid">
+<div class="container-fluid"> <!--rr42 4/30/2024!-->
     <h1>New Association</h1>
 
     <form method="GET">
@@ -51,7 +48,6 @@ if (isset($_GET["search-query"])) {
             <label for="user-search">Search Users:</label>
             <input type="text" id="user-search" name="user-search" class="form-control" placeholder="Enter username">
         </div>
-
         <div class="form-group">
             <label for="song-search">Search Songs:</label>
             <input type="text" id="song-search" name="song-search" class="form-control" placeholder="Enter title or artist">
@@ -68,7 +64,6 @@ if (isset($_GET["search-query"])) {
             $stmt->execute([":search" => $user_search]);
             $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
-
         if (isset($_GET["song-search"])) {
             $song_search = "%" . $_GET["song-search"] . "%";
             $stmt = $db->prepare("SELECT label, title, artist FROM SONGS WHERE title LIKE :search OR artist LIKE :search LIMIT 25");
@@ -87,7 +82,6 @@ if (isset($_GET["search-query"])) {
                 </div>
             <?php endforeach; ?>
         <?php endif; ?>
-
         <?php if (!empty($songs)) : ?>
             <h3>Songs</h3>
             <?php foreach ($songs as $song) : ?>

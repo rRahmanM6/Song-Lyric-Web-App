@@ -1,4 +1,4 @@
-<?php
+<?php //rr42 4/30/2024
 require(__DIR__ . "/../../../partials/nav.php");
 require(__DIR__ . "/../../../partials/flash.php");
 
@@ -7,21 +7,16 @@ if (!has_role("Admin")) {
     header("Location: $BASE_PATH" . "/search.php");
     exit;
 }
-
 $db = getDB();
-
 $totalStmt = $db->query("SELECT COUNT(*) FROM SONGS WHERE label NOT IN (SELECT song_label FROM UserSongs)");
 $totalNoAssociation = $totalStmt->fetchColumn();
-
 $limit = isset($_GET['limit']) ? $_GET['limit'] : 10;
 if (!is_numeric($limit) || $limit < 1 || $limit > 100) {
     flash("Invalid limit value. Please enter a number between 1 and 100.", "danger");
     header("Location: {$_SERVER['PHP_SELF']}");
     exit;
 }
-
 $search = isset($_GET['search']) ? $_GET['search'] : '';
-
 if (!empty($search)) {
     $stmt = $db->prepare("SELECT * FROM SONGS WHERE (title LIKE CONCAT('%', :search, '%') OR artist LIKE CONCAT('%', :search, '%')) AND label NOT IN (SELECT song_label FROM UserSongs) LIMIT :limit");
     $stmt->bindValue(':search', $search, PDO::PARAM_STR);
@@ -30,11 +25,9 @@ if (!empty($search)) {
     $stmt = $db->prepare("SELECT * FROM SONGS WHERE label NOT IN (SELECT song_label FROM UserSongs) LIMIT :limit");
     $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
 }
-
 $stmt->execute();
 $noAssociationSongs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $displayedRecords = count($noAssociationSongs);
-
 if (empty($noAssociationSongs)) {
     flash("No matching results found.", "warning");
     header("Location: {$_SERVER['PHP_SELF']}");
@@ -42,7 +35,7 @@ if (empty($noAssociationSongs)) {
 }
 ?>
 
-<div class="container-fluid">
+<div class="container-fluid"> <!--rr42 4/30/2024!-->
     <h1>No Association</h1>
     <div class="row">
         <div class="col-md-12">
@@ -50,7 +43,6 @@ if (empty($noAssociationSongs)) {
             <p><?php echo $displayedRecords; ?> records displayed</p>
         </div>
     </div>
-
     <div class="row">
         <div class="col-md-12">
             <form method="GET">
